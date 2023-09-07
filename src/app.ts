@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use("/consent", consent)
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
+app.use((_req: Request, _res: Response, next: NextFunction) => {
   next(new Error("Not Found"))
 })
 
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (app.get("env") === "development") {
-  app.use((err: Error, req: Request, res: Response) => {
+  app.use((err: Error, _req: Request, res: Response) => {
     res.status(500)
     res.render("error", {
       message: err.message,
@@ -46,7 +46,7 @@ if (app.get("env") === "development") {
 
 // production error handler
 // no stacktraces leaked to user
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: Error, _req: Request, res: Response) => {
   res.status(500)
   res.render("error", {
     message: err.message,
@@ -54,7 +54,7 @@ app.use((err: Error, req: Request, res: Response) => {
   })
 })
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, _err: Request, res: Response, _res: NextFunction) => {
   console.error(err.stack)
   res.status(500).render("error", {
     message: JSON.stringify(err, null, 2),
